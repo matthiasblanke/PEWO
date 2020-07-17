@@ -44,5 +44,5 @@ rule placement_appspam:
     version: "1.0"
     shell:
         """
-        appspam -s {input.s} -q {input.q} -t {input.t} -g {wildcards.mode} -w {wildcards.w} -o {output.jplace} >& {log}
+        appspam -s {input.s} -q {input.q} -t {input.t} -g {wildcards.mode} -w {wildcards.w} -o {output.jplace} -a {output.allowance} >& {log}
         """

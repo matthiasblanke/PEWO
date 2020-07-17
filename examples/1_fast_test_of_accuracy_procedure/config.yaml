@@ -10,13 +10,13 @@ dataset_tree: examples/1_fast_test_of_accuracy_procedure/RAxML_bipartitions.150.
 
 # working directory
 #MUST be an absolute path (some software do not accept relative path)
-workdir: /home/matthias/Documents/test_PEWO_xmp1
+workdir: /media/matthias/DATEN/APPSPAM/evaluation/test_PEWO_xmp1
 
 # states used in analysis, either '0' for nucleotides or '1' for amino acids
 states: 0
 
-# which software to test, at least one of : epa, epang, pplacer, rappas, apples
-test_soft: [appspam,epang,pplacer,rappas]
+# which software to test, at least one of : epa, epang, pplacer, rappas, apples, appspam
+test_soft: [appspam,epang,epa,pplacer,apples]
 
 # read lengths to test
 read_length: [150]
@@ -28,7 +28,7 @@ read_length: [150]
 ### this section matters only when you run the "eval_accuracy.smk" workflow
 
 # number of random prunings to compute
-pruning_count: 14
+pruning_count: 50
 
 
 ## IF "RESOURCES" ARE EVALUATED
@@ -100,14 +100,14 @@ config_epang:
   # h3: heuristic equivalent to pplacer defaults, fast
   # h4: no heuristic, very very slow but should produce the best accuracy
   #(Barbera et al, 2019 ; doi: 10.1093/sysbio/syy054)
-  heuristics: ["h1"]
+  heuristics: ["h1", "h2"]
 
   h1:
     #value in ]0,1], value close to 1 recommended by authors
     g: [0.99999]  
   h2:
     #values in ]0,1], higher values increase accuracy but analysis is slower
-    G: [0.1]       
+    G: [0.2]       
   h3:
     options: none       #reserved if any option appears in future versions
   h4:
@@ -128,12 +128,12 @@ config_rappas:
 
   #panel of k that is tested
   #integer in [3,16] (~8-10 recommended, >12 often produces too long computations)
-  k: [7]
+  k: [7, 8]
 
   #panel of omega that is tested, rappas probability threshold is Thr=(omega/#states)^k
   #integer in ]0,#states] with #states=4 for nucleotides and 20 for amino acids
   #For DNA, values in [1.5,2.0] recommended. For amino acids, values in [5,15] recommended.
-  omega: [2.0]
+  omega: [1.5, 2.0]
 
   #reduction setup, e.g. gap/non-gap ratio
   #above which a site of the input alignment
@@ -187,7 +187,7 @@ config_apples:
   # BE : k=1 (Beyer et al., 1974)
   #methods: ["OLS","FM","BE"]
   #!warning, be sure to set methods VALUES as UPPER CASE
-  methods: [OLS]
+  methods: [OLS, FM, BE]
 
   #List of placement criterion to test.
   #Possible values are:
@@ -196,7 +196,7 @@ config_apples:
   # HYBRID : MLSE then ME
   #criteria: ["MLSE","ME","HYBRID"]
   #!warning, be sure to set criteria VALUES as UPPER CASE
-  criteria: [MLSE]
+  criteria: [MLSE, HYBRID]
 
 ### APP-SPAM
 ###############################
@@ -206,14 +206,14 @@ config_appspam:
   #appspam placements are based on distance computations between the query and the reference tree
 
   #List of assignment modes to test
-  assignmentmode: [BEST, LCA, PHYLOKMERS, APPLES, WEIGHTED, KMER, KMERLCA]
+  assignmentmode: [BESTCOUNT, LCACOUNT, DESCENTCOUNT, APPLES, PHYLOKMERS, SAC, SCOREALL]
 
   #Filtering threshold. Number of dont care positions will be multiplied by this constant.
   #All words below the threshold will not be considered
-  filteringthreshold: [0, 40]
+  filteringthreshold: [0]
 
   #List of number of dont care positions to test.
-  d: [8, 12]
+  d: [12]
 
 
 ########################################################################################################################

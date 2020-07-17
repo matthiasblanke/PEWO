@@ -10,13 +10,13 @@ dataset_tree: examples/2_placement_accuracy_for_a_bacterial_taxonomy/RAxML_bipar
 
 # working directory
 #MUST be an absolute path (some software do not accept relative path)
-workdir: /home/matthias/Documents/test_PEWO_xmp2
+workdir: /media/matthias/DATEN/APPSPAM/evaluation/test_PEWO_xmp2
 
 # states used in analysis, either '0' for nucleotides or '1' for amino acids
 states: 0
 
 # which software to test, at least one of : epa, epang, pplacer, rappas, apples
-test_soft: [pplacer, appspam, apples]
+test_soft: [pplacer, appspam]
 
 # read lengths to test
 read_length: [150]
@@ -28,7 +28,7 @@ read_length: [150]
 ### this section matters only when you run the "eval_accuracy.smk" workflow
 
 # number of random prunings to compute
-pruning_count: 5
+pruning_count: 20
 
 
 ## IF "RESOURCES" ARE EVALUATED
@@ -204,14 +204,14 @@ config_appspam:
   #appspam placements are based on distance computations between the query and the reference tree
 
   #List of assignment modes to test
-  assignmentmode: [BEST, LCA, PHYLOKMERS, APPLES, WEIGHTED, KMER, KMERLCA]
+  assignmentmode: [LCACOUNT, APPLES, PHYLOKMERS, SAC, SCOREALL]
 
   #Filtering threshold. Number of dont care positions will be multiplied by this constant.
   #All words below the threshold will not be considered
-  filteringthreshold: [0, 40]
+  filteringthreshold: [0]
 
   #List of number of dont care positions to test.
-  d: [8, 12]
+  d: [12]
 
 ########################################################################################################################
 # OPTIONS COMMON TO ALL SOFTWARE

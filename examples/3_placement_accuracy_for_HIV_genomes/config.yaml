@@ -10,16 +10,16 @@ dataset_tree: examples/3_placement_accuracy_for_HIV_genomes/compendium-norec-exp
 
 # working directory
 #MUST be an absolute path (some software do not accept relative path)
-workdir: /home/matthias/Documents/test_PEWO_xmp3
+workdir: /media/matthias/DATEN/APPSPAM/evaluation/test_PEWO_xmp3
 
 # states used in analysis, either '0' for nucleotides or '1' for amino acids
 states: 0
 
-# which software to test, at least one of : epa, epang, pplacer, rappas, apples
-test_soft: [epang, appspam, pplacer]
+# which software to test, at least one of : epa, epang, pplacer, rappas, apples, appspam
+test_soft: [epang, appspam, pplacer, apples]
 
 # read lengths to test
-read_length: [500]
+read_length: [300, 500]
 
 
 ## IF "ACCURACY" IS EVALUATED
@@ -104,7 +104,7 @@ config_epang:
 
   h1:
     #value in ]0,1], value close to 1 recommended by authors
-    g: [0.9, 0.999, 0.99999]  
+    g: [0.9, 0.99999]  
   h2:
     #values in ]0,1], higher values increase accuracy but analysis is slower
     G: [0.1]       
@@ -187,7 +187,7 @@ config_apples:
   # BE : k=1 (Beyer et al., 1974)
   #methods: ["OLS","FM","BE"]
   #!warning, be sure to set methods VALUES as UPPER CASE
-  methods: [OLS]
+  methods: [FM, OLS]
 
   #List of placement criterion to test.
   #Possible values are:
@@ -196,22 +196,20 @@ config_apples:
   # HYBRID : MLSE then ME
   #criteria: ["MLSE","ME","HYBRID"]
   #!warning, be sure to set criteria VALUES as UPPER CASE
-  criteria: [MLSE]
+  criteria: [MLSE, HYBRID]
 
-### APP-SPAM
+### APPSPAM
 ###############################
 
 config_appspam:
 
   #appspam placements are based on distance computations between the query and the reference tree
 
-  assignmentmode: [BEST, LCA, APPLES, WEIGHTED, KMER, KMERLCA]
-
-  filteringthreshold: [0, 40]
+  assignmentmode: [BESTSCORE, LCACOUNT, DESCENTCOUNT, DESCENDWEIGHTED, SCOREALL, SAC]
 
 
   #List of number of dont care positions to test.
-  d: [8, 12]
+  d: [12]
 
 
 ########################################################################################################################

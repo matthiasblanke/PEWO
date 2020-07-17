@@ -10,13 +10,13 @@ dataset_tree: examples/5_CPU_RAM_requirements_evaluation/tree_652.nwk
 
 # working directory
 #MUST be an absolute path (some software do not accept relative path)
-workdir: /home/matthias/Documents/test_PEWO_xmp5
+workdir: /media/matthias/DATEN/APPSPAM/evaluation/test_PEWO_xmp5
 
 # states used in analysis, either '0' for nucleotides or '1' for amino acids
 states: 0
 
 # which software to test, at least one of : epa, epang, pplacer, rappas, apples, appspam
-test_soft: [epang, apples, appspam]
+test_soft: [epang, apples, appspam, rappas]
 
 # read lengths to test
 read_length: [150]
@@ -101,7 +101,7 @@ config_epang:
 
   h1:
     #value in ]0,1], value close to 1 recommended by authors
-    g: [0.999,0.99999]  
+    g: [0.999]  
   h2:
     #values in ]0,1], higher values increase accuracy but analysis is slower
     G: [0.01]       
@@ -125,7 +125,7 @@ config_rappas:
 
   #panel of k that is tested
   #integer in [3,16] (~8-10 recommended, >12 often produces too long computations)
-  k: [6,8]
+  k: [6]
 
   #panel of omega that is tested, rappas probability threshold is Thr=(omega/#states)^k
   #integer in ]0,#states] with #states=4 for nucleotides and 20 for amino acids
@@ -203,14 +203,14 @@ config_appspam:
   #appspam placements are based on distance computations between the query and the reference tree
 
   #List of assignment modes to test
-  assignmentmode: [BESTSCORE]
+  assignmentmode: [BESTSCORE, DESCENDWEIGHTED]
 
   #Filtering threshold. Number of dont care positions will be multiplied by this constant.
   #All words below the threshold will not be considered
   filteringthreshold: [0]
 
   #List of number of dont care positions to test.
-  d: [8]
+  d: [8, 12]
 
 
 ########################################################################################################################
