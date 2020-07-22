@@ -201,6 +201,8 @@ config_appspam:
 
   mode: [LCACOUNT]
 
+  allowance: [0,1]
+
   #List of number of dont care positions to test.
   w: [8, 12]
 
